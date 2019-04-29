@@ -16,7 +16,8 @@ void loop()
    {
     digitalWrite(LED_output,HIGH);        //alarm activation
     Serial.println("ATDXXXXXXXXXX;");     //replace XXXXXXXXXX with the 10 digit mobile number on which you want to send an alert via call.
-    delay(30000);                         // delay to allow the gsm (sim 900) module to make a call(set it according to the requirement).
+   // SendAlertMsg                         // Uncomment this line to send a text msg instead of call !!
+     delay(30000);                         // delay to allow the gsm (sim 900) module to make a call(set it according to the requirement).
    }
    else
    {
@@ -24,4 +25,15 @@ void loop()
     delay(100);
    }
   }
+}
+void SendAlertMsg()
+{
+ Serial.println("AT+CMGF=1"); //Sets the GSM Module in Text Mode
+ delay(1000);  // Delay of 1000 milli seconds or 1 second
+  Serial.println("AT+CMGS=\"+91xxxxxxxxxx\"\r"); //replace XXXXXXXXXX with the 10 digit mobile number on which you want to send an alert via msg.
+ delay(1000);
+ Serial.println("Place your alert text here");// The SMS text you want to send
+  delay(100);
+  Serial.println((char)26);// ASCII code of CTRL+Z
+  delay(1000);
 }
